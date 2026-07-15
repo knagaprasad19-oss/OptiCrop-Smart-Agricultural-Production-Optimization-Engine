@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Create account{% endblock %}
+{% block content %}
+<span class="eyebrow">Get started</span>
+<h1>Create your OptiCrop account</h1>
+<p class="lede">Track soil samples, predictions, and reports across every field you manage.</p>
+
+<div class="panel" style="max-width:420px;">
+  <form method="POST" action="{{ url_for('register') }}">
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="e.g. field-agronomist" required>
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Choose a password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Create account</button>
+  </form>
+</div>
+<p class="lede">Already have an account? <a href="{{ url_for('login') }}" style="color:var(--leaf)">Sign in</a>.</p>
+{% endblock %}

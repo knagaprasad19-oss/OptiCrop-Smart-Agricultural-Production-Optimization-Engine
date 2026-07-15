@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<span class="eyebrow">Welcome back</span>
+<h1>Sign in to OptiCrop</h1>
+
+<div class="panel" style="max-width:420px;">
+  <form method="POST" action="{{ url_for('login') }}">
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Your username" required>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Your password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </form>
+</div>
+<p class="lede">New here? <a href="{{ url_for('register') }}" style="color:var(--leaf)">Create an account</a>.</p>
+{% endblock %}

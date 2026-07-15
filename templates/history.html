@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}History{% endblock %}
+{% block content %}
+<span class="eyebrow">Archive</span>
+<h1>Prediction history</h1>
+<p class="lede">Every soil sample you've logged and what the model recommended for it.</p>
+
+{% if history %}
+<div class="panel">
+  <table>
+    <thead>
+      <tr><th>Date</th><th>Soil ID</th><th>Recommended crop</th><th>Confidence</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for row in history %}
+      <tr>
+        <td>{{ row.created_at[:10] }}</td>
+        <td style="font-family:var(--font-mono);">#{{ row.soil_id }}</td>
+        <td><span class="pill">{{ row.crop_name }}</span></td>
+        <td>{{ (row.confidence * 100) | round(1) }}%</td>
+        <td><a href="{{ url_for('prediction_result', prediction_id=row.prediction_id) }}" style="color:var(--leaf)">View →</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="empty-state">No history yet. <a href="{{ url_for('add_soil_data') }}" style="color:var(--leaf)">Log your first soil sample</a>.</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{
+  "algorithm": "random_forest",
+  "accuracy": 0.9905,
+  "f1_score": 0.9905,
+  "trained_samples": 2112,
+  "test_samples": 528,
+  "num_crops": 22,
+  "dataset_rows": 2640
+}

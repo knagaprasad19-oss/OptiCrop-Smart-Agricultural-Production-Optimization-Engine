@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="hero">
+  <span class="eyebrow">Smart Agricultural Production Optimization</span>
+  <h1>Know what to plant before you break ground.</h1>
+  <p class="lede">
+    OptiCrop reads your soil's nutrient profile and local climate, then tells
+    you which crop a trained machine learning model expects to thrive there —
+    with a full report you can act on.
+  </p>
+  <div style="display:flex; gap:12px;">
+    {% if current_user %}
+      <a href="{{ url_for('add_soil_data') }}" class="btn btn-primary">Log a soil sample</a>
+    {% else %}
+      <a href="{{ url_for('register') }}" class="btn btn-primary">Get started</a>
+      <a href="{{ url_for('login') }}" class="btn btn-ghost">Sign in</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card-grid" style="margin-top:36px;">
+  <div class="stat-card">
+    <span class="num">{{ num_crops }}</span>
+    <span class="label">Crops recognized</span>
+  </div>
+  <div class="stat-card">
+    <span class="num">{{ (metrics.accuracy * 100) | round(1) if metrics.accuracy else '—' }}%</span>
+    <span class="label">Model accuracy ({{ metrics.algorithm or 'n/a' }})</span>
+  </div>
+  <div class="stat-card">
+    <span class="num">7</span>
+    <span class="label">Fields per soil sample</span>
+  </div>
+</div>
+
+<div class="hero-grid">
+  <div class="panel">
+    <h2>How it works</h2>
+    <div class="strata">
+      <div class="stratum">
+        <span class="stratum-label">1 · Log a sample</span>
+        <div class="stratum-bar"><div class="stratum-fill n" style="width:100%"></div></div>
+      </div>
+      <div class="stratum">
+        <span class="stratum-label">2 · Model predicts</span>
+        <div class="stratum-bar"><div class="stratum-fill p" style="width:100%"></div></div>
+      </div>
+      <div class="stratum">
+        <span class="stratum-label">3 · Get a report</span>
+        <div class="stratum-bar"><div class="stratum-fill k" style="width:100%"></div></div>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:16px;">
+      Enter nitrogen, phosphorus, potassium, temperature, humidity, pH, and
+      rainfall readings. A trained classifier compares them against the
+      profiles of 22 crops and returns the best match with a confidence score,
+      alongside a saved recommendation report.
+    </p>
+    <div class="tech-tags">
+      <span class="tech-tag">Flask</span>
+      <span class="tech-tag">scikit-learn</span>
+      <span class="tech-tag">pandas</span>
+      <span class="tech-tag">NumPy</span>
+      <span class="tech-tag">SQLite</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Project roadmap</h2>
+    <div class="epic-list">
+      <div class="epic-row"><span class="epic-num">01</span><span class="epic-text">Define the agricultural problem and business objectives</span></div>
+      <div class="epic-row"><span class="epic-num">02</span><span class="epic-text">Collect and analyze soil &amp; climate data</span></div>
+      <div class="epic-row"><span class="epic-num">03</span><span class="epic-text">Clean, split, and prepare data for modeling</span></div>
+      <div class="epic-row"><span class="epic-num">04</span><span class="epic-text">Train, evaluate, and save the best model</span></div>
+      <div class="epic-row"><span class="epic-num">05</span><span class="epic-text">Ship a working web application</span></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Field Log{% endblock %}
+{% block content %}
+<span class="eyebrow">Field log</span>
+<h1>Welcome back, {{ current_user.username }}</h1>
+<p class="lede">Log a new soil sample to get an instant crop recommendation, or review your recent activity below.</p>
+
+<div class="card-grid">
+  <div class="stat-card">
+    <span class="num">{{ total }}</span>
+    <span class="label">Total predictions logged</span>
+  </div>
+  <a href="{{ url_for('add_soil_data') }}" class="stat-card" style="display:flex; flex-direction:column; justify-content:center; border-color:var(--leaf);">
+    <span class="label" style="color:var(--leaf); font-weight:600;">+ Log a new soil sample</span>
+  </a>
+</div>
+
+<h2>Recent predictions</h2>
+{% if history %}
+<div class="panel">
+  <table>
+    <thead>
+      <tr><th>Date</th><th>Recommended crop</th><th>Confidence</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for row in history %}
+      <tr>
+        <td>{{ row.created_at[:10] }}</td>
+        <td><span class="pill">{{ row.crop_name }}</span></td>
+        <td>{{ (row.confidence * 100) | round(1) }}%</td>
+        <td><a href="{{ url_for('prediction_result', prediction_id=row.prediction_id) }}" style="color:var(--leaf)">View →</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="empty-state">No soil samples logged yet. Start by submitting your first reading.</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}New Soil Sample{% endblock %}
+{% block content %}
+<span class="eyebrow">New sample</span>
+<h1>Log a soil &amp; climate reading</h1>
+<p class="lede">Enter the seven parameters below. The model will compare them against 22 crop profiles and return the best match.</p>
+
+<div class="panel" style="max-width:640px;">
+  <form method="POST" action="{{ url_for('add_soil_data') }}">
+    <div class="form-grid">
+      <div class="field">
+        <label for="N">Nitrogen (N)</label>
+        <input type="number" step="any" id="N" name="N" placeholder="kg/ha, e.g. 90" value="{{ form.N or '' }}" required>
+      </div>
+      <div class="field">
+        <label for="P">Phosphorus (P)</label>
+        <input type="number" step="any" id="P" name="P" placeholder="kg/ha, e.g. 42" value="{{ form.P or '' }}" required>
+      </div>
+      <div class="field">
+        <label for="K">Potassium (K)</label>
+        <input type="number" step="any" id="K" name="K" placeholder="kg/ha, e.g. 43" value="{{ form.K or '' }}" required>
+      </div>
+      <div class="field">
+        <label for="temperature">Temperature</label>
+        <input type="number" step="any" id="temperature" name="temperature" placeholder="°C, e.g. 25.5" value="{{ form.temperature or '' }}" required>
+      </div>
+      <div class="field">
+        <label for="humidity">Humidity</label>
+        <input type="number" step="any" id="humidity" name="humidity" placeholder="%, e.g. 80" value="{{ form.humidity or '' }}" required>
+      </div>
+      <div class="field">
+        <label for="ph">Soil pH</label>
+        <input type="number" step="any" id="ph" name="ph" placeholder="e.g. 6.5" value="{{ form.ph or '' }}" required>
+      </div>
+      <div class="field">
+        <label for="rainfall">Rainfall</label>
+        <input type="number" step="any" id="rainfall" name="rainfall" placeholder="mm, e.g. 200" value="{{ form.rainfall or '' }}" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Get crop recommendation</button>
+  </form>
+</div>
+{% endblock %}

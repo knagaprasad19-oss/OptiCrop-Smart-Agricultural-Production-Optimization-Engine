@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Model Info{% endblock %}
+{% block content %}
+<span class="eyebrow">Under the hood</span>
+<h1>Model &amp; dataset details</h1>
+<p class="lede">Transparency on what powers OptiCrop's recommendations.</p>
+
+<div class="card-grid">
+  <div class="stat-card">
+    <span class="num">{{ (metrics.accuracy * 100) | round(1) if metrics.accuracy else '—' }}%</span>
+    <span class="label">Test accuracy</span>
+  </div>
+  <div class="stat-card">
+    <span class="num">{{ (metrics.f1_score * 100) | round(1) if metrics.f1_score else '—' }}%</span>
+    <span class="label">Weighted F1 score</span>
+  </div>
+  <div class="stat-card">
+    <span class="num">{{ metrics.dataset_rows or '—' }}</span>
+    <span class="label">Training rows</span>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Active model</h3>
+  {% if model %}
+  <table>
+    <tbody>
+      <tr><td>Model name</td><td>{{ model.model_name }}</td></tr>
+      <tr><td>Algorithm</td><td>{{ model.algorithm }}</td></tr>
+      <tr><td>Accuracy</td><td>{{ (model.accuracy * 100) | round(1) }}%</td></tr>
+      <tr><td>Trained</td><td>{{ model.trained_date[:10] }}</td></tr>
+      <tr><td>File</td><td style="font-family:var(--font-mono);">{{ model.file_path }}</td></tr>
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+
+<div class="panel">
+  <h3>Training dataset(s)</h3>
+  <table>
+    <thead><tr><th>Name</th><th>Description</th><th>Uploaded</th></tr></thead>
+    <tbody>
+      {% for d in datasets %}
+      <tr>
+        <td>{{ d.name }}</td>
+        <td style="color:var(--text-muted);">{{ d.description }}</td>
+        <td>{{ d.upload_date[:10] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h3>Recognized crops ({{ crops | length }})</h3>
+  <div style="display:flex; flex-wrap:wrap; gap:8px;">
+    {% for c in crops %}
+      <span class="pill">{{ c.crop_name }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

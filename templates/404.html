@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Not found{% endblock %}
+{% block content %}
+<span class="eyebrow">404</span>
+<h1>That page doesn't exist</h1>
+<p class="lede">The sample, prediction, or report you're looking for wasn't found — or it doesn't belong to your account.</p>
+<a href="{{ url_for('index') }}" class="btn btn-primary">Back to home</a>
+{% endblock %}

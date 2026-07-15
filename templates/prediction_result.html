@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Prediction Result{% endblock %}
+{% block content %}
+<span class="eyebrow">Prediction #{{ prediction.prediction_id }}</span>
+<h1>Recommendation ready</h1>
+
+<div class="result-hero">
+  <div class="confidence-ring">{{ (prediction.confidence * 100) | round(0) | int }}%</div>
+  <div>
+    <div style="font-size:12.5px; color:var(--text-muted); margin-bottom:4px;">Recommended crop</div>
+    <div class="result-crop">{{ prediction.crop_name }}</div>
+    <div style="font-size:13px; color:var(--text-muted); margin-top:4px;">{{ prediction.crop_description }}</div>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Soil profile submitted</h3>
+  <div class="strata">
+    <div class="stratum">
+      <span class="stratum-label">Nitrogen (N)</span>
+      <div class="stratum-bar"><div class="stratum-fill n" style="width:{{ [(prediction.N / 140 * 100), 100] | min }}%"></div></div>
+      <span class="stratum-val">{{ prediction.N | round(1) }}</span>
+    </div>
+    <div class="stratum">
+      <span class="stratum-label">Phosphorus (P)</span>
+      <div class="stratum-bar"><div class="stratum-fill p" style="width:{{ [(prediction.P / 145 * 100), 100] | min }}%"></div></div>
+      <span class="stratum-val">{{ prediction.P | round(1) }}</span>
+    </div>
+    <div class="stratum">
+      <span class="stratum-label">Potassium (K)</span>
+      <div class="stratum-bar"><div class="stratum-fill k" style="width:{{ [(prediction.K / 205 * 100), 100] | min }}%"></div></div>
+      <span class="stratum-val">{{ prediction.K | round(1) }}</span>
+    </div>
+  </div>
+  <div style="display:flex; gap:24px; font-family:var(--font-mono); font-size:13px; color:var(--text-muted); margin-top:8px; flex-wrap:wrap;">
+    <span>Temp: {{ prediction.temperature | round(1) }}°C</span>
+    <span>Humidity: {{ prediction.humidity | round(1) }}%</span>
+    <span>pH: {{ prediction.ph | round(2) }}</span>
+    <span>Rainfall: {{ prediction.rainfall | round(1) }}mm</span>
+  </div>
+</div>
+
+{% if alternatives %}
+<div class="panel">
+  <h3>Other close matches</h3>
+  <div class="alt-list">
+    {% for alt in alternatives %}
+      <div class="alt-row"><span>{{ alt.crop }}</span><span>{{ (alt.confidence * 100) | round(1) }}%</span></div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if report %}
+<div class="panel">
+  <h3>Report #{{ report.report_id }}</h3>
+  <p style="color:var(--text-muted);">{{ report.summary }}</p>
+  <p style="color:var(--text);">{{ report.recommendations }}</p>
+  <div style="font-size:12px; color:var(--text-faint); font-family:var(--font-mono); margin-top:8px;">
+    Model: {{ prediction.model_name }} ({{ (prediction.model_accuracy * 100) | round(1) }}% test accuracy)
+  </div>
+</div>
+{% endif %}
+
+<div style="display:flex; gap:12px;">
+  <a href="{{ url_for('add_soil_data') }}" class="btn btn-primary">Log another sample</a>
+  <a href="{{ url_for('history') }}" class="btn btn-ghost">View history</a>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}OptiCrop{% endblock %} · OptiCrop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="{{ url_for('index') }}">
+      <span class="brand-mark">OC</span>
+      <span class="brand-name">OptiCrop</span>
+    </a>
+    <nav class="nav">
+      {% if current_user %}
+        <a href="{{ url_for('dashboard') }}" class="nav-link {{ 'active' if request.endpoint == 'dashboard' }}">Field Log</a>
+        <a href="{{ url_for('add_soil_data') }}" class="nav-link {{ 'active' if request.endpoint == 'add_soil_data' }}">New Sample</a>
+        <a href="{{ url_for('history') }}" class="nav-link {{ 'active' if request.endpoint == 'history' }}">History</a>
+        <a href="{{ url_for('reports') }}" class="nav-link {{ 'active' if request.endpoint == 'reports' }}">Reports</a>
+        <a href="{{ url_for('about_model') }}" class="nav-link {{ 'active' if request.endpoint == 'about_model' }}">Model Info</a>
+      {% else %}
+        <a href="{{ url_for('index') }}" class="nav-link {{ 'active' if request.endpoint == 'index' }}">Home</a>
+        <a href="{{ url_for('about_model') }}" class="nav-link {{ 'active' if request.endpoint == 'about_model' }}">Model Info</a>
+      {% endif %}
+    </nav>
+    <div class="sidebar-footer">
+      {% if current_user %}
+        <div class="whoami"><span class="dot"></span>{{ current_user.username }}</div>
+        <a href="{{ url_for('logout') }}" class="nav-link logout">Sign out</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="nav-link">Sign in</a>
+        <a href="{{ url_for('register') }}" class="nav-link nav-link--cta">Get started</a>
+      {% endif %}
+    </div>
+  </aside>
+
+  <main class="content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-stack">
+          {% for category, message in messages %}
+            <div class="flash flash--{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+</body>
+</html>

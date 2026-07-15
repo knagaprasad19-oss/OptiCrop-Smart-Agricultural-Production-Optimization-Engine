@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Report #{{ report.report_id }}{% endblock %}
+{% block content %}
+<span class="eyebrow">Report #{{ report.report_id }} · {{ report.created_at[:10] }}</span>
+<h1>{{ report.crop_name | capitalize }} recommendation report</h1>
+
+<div class="panel">
+  <h3>Summary</h3>
+  <p style="color:var(--text-muted);">{{ report.summary }}</p>
+  <h3 style="margin-top:20px;">Recommendations</h3>
+  <p>{{ report.recommendations }}</p>
+</div>
+
+<a href="{{ url_for('reports') }}" class="btn btn-ghost">← Back to reports</a>
+{% endblock %}
