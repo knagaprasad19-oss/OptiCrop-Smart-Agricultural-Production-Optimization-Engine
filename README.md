@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # OptiCrop — Smart Agricultural Production Optimization System
 
 A full-stack Flask web app that recommends the best crop to plant given soil
@@ -69,3 +70,6 @@ sample — writing a `Prediction` row and a generated `Report` row for it.
   `train_model.py` if you have real field data.
 - `app.secret_key` should be overridden via the `OPTICROP_SECRET_KEY`
   environment variable in any real deployment.
+=======
+# OptiCrop-Smart-Agricultural-Production-Optimization-Engine
+>>>>>>> f97efc05dc4d901ff11006aa14884589d13fa0ac
